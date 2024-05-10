@@ -3,12 +3,13 @@ const { test, expect } = require('@playwright/test');
 const { HomePage } = require('../pages/home.page');
 const { ResultsPage } = require('../pages/results.page');
 const { ProductDetailsPage } = require('../pages/product.details.page');
+const { CreateAccountPage } = require('../pages/create.account.page');
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://magento.softwaretestingboard.com/')
 });
 
-test.skip('Verify the searching functionaly', async ({ page }) => {
+test('Verify the searching functionaly', async ({ page }) => {
 
   const homepage = new HomePage(page);
   const resultspage = new ResultsPage(page);
@@ -18,6 +19,7 @@ test.skip('Verify the searching functionaly', async ({ page }) => {
   await homepage.searchForATerm('shirt');
 
   // Assertions to know user is on Results Page
+
   await resultspage.verifyPageTitle('shirt');
   await resultspage.verifyProductGrid();
   
@@ -35,18 +37,41 @@ test('Verify user can add a product to cart', async ({ page }) => {
   await homepage.searchForATerm('Radiant Tee');
 
   // Go to Product Details Page
+
   await resultspage.goToPDP();
 
   // Assertions to know user is on Product Details Page
+
   await pdp.verifyPageTitle('Radiant Tee');
+
+  // User selects a product size, color and quantity
 
   await pdp.selectSizeAndColorAndQty('M','Blue', 2);
 
+  // User adds product to the cart
+
   await pdp.addProdToCart();
+
+  // Asertion to know if the right quantity was added to cart
 
   await pdp.verifyProductWasAdded(""+2);
   
 
-  // Expect a title "to contain" a substring.
-  //await expect(page).toHaveTitle(/Playwright/);
+});
+
+test('Verify user can create an account', async ({ page }) => {
+
+  const homepage = new HomePage(page);
+  const creatAnAccount = new CreateAccountPage(page);
+
+  // On Homepage, user click on Create an account link
+
+  await homepage.clickOnCreateAccount();
+
+  // On Create an account link, user creates his account
+  // The assertion id done by checking the success message and te user information on my account page
+
+  await creatAnAccount.creatAnAccount();
+
+ 
 });
