@@ -4,6 +4,7 @@ const { HomePage } = require('../pages/home.page');
 const { ResultsPage } = require('../pages/results.page');
 const { ProductDetailsPage } = require('../pages/product.details.page');
 const { CreateAccountPage } = require('../pages/create.account.page');
+const { LoginPage } = require('../pages/login.page');
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://magento.softwaretestingboard.com/')
@@ -72,6 +73,27 @@ test('Verify user can create an account', async ({ page }) => {
   // The assertion id done by checking the success message and te user information on my account page
 
   await creatAnAccount.creatAnAccount();
+
+ 
+});
+
+test('Verify user can not login in with invalid credentials', async ({ page }) => {
+
+  const homepage = new HomePage(page);
+  const creatAnAccount = new CreateAccountPage(page);
+  const loginpage = new LoginPage(page);
+
+  // On Homepage, user click on Sign  link
+
+  await homepage.clickOnSignIn();
+
+  // On Sign in page, user enter invalid credentials
+
+  await loginpage.enterUserCredentials();
+
+  // The assertion id done by checking the success message and te user information on my account page
+  
+  await loginpage.verifyAlertMessage();
 
  
 });

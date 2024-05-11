@@ -5,6 +5,7 @@ exports.HomePage = class HomePage {
         this.page = page;
         this.searchInput = page.locator('id=search');
         this.createAccount = page.getByText('Create an Account').first();
+        this.signIn = page.getByText('Sign In').first();
       }
 
     
@@ -18,6 +19,11 @@ exports.HomePage = class HomePage {
 
     async clickOnCreateAccount(){
         await this.createAccount.click();
+
+    }
+
+    async clickOnSignIn(){
+        await this.signIn.click();
 
     }
 
