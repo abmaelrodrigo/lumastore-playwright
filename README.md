@@ -27,7 +27,7 @@ A. After git clone this project to your local machine, access the project direct
 npm init playwright@latest
 ```
 
-2. **Abra o o painel interativo do Playwright**: 
+2. **Open Playwright on UI mode**: 
 ```bash
 npx playwright test --ui
 ```
